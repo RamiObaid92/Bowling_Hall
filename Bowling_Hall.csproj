@@ -14,4 +14,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\Models\" />
+    <Folder Include="src\Data\" />
+    <Folder Include="src\Services\" />
+    <Folder Include="src\Utils\" />
+  </ItemGroup>
+
 </Project>
