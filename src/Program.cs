@@ -1,4 +1,4 @@
-﻿namespace Bowling_Hall
+﻿namespace Bowling_Hall.src
 {
     internal class Program
     {
