@@ -15,10 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\Models\" />
-    <Folder Include="src\Data\" />
-    <Folder Include="src\Services\" />
-    <Folder Include="src\Utils\" />
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
