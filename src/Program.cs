@@ -1,4 +1,5 @@
 ﻿using Bowling_Hall.src.Data;
+using Bowling_Hall.src.App;
 using Bowling_Hall.src.Interfaces;
 using Bowling_Hall.src.Models;
 using Bowling_Hall.src.Repositories;
@@ -33,8 +34,25 @@ namespace Bowling_Hall.src
                     services.AddScoped<IRepository<Member>, MemberRepo>();
                     services.AddScoped<IMemberService, MemberService>();
 
-                    services.AddSingleton<App>();
-                });
+                    services.AddSingleton<AppMain>();
+                }).Build();
+
+            using (var scope = builder.Services.CreateScope()) 
+            {
+                // Logger brought into scope
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                // get the current directory
+                var currentDirectory = Directory.GetCurrentDirectory();
+
+                // Log the directory
+                logger.LogInformation("Current working directory: {Directory}", currentDirectory);
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
+
+            var app = builder.Services.GetRequiredService<AppMain>();
+            app.Run();
         }
     }
 }
