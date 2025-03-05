@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Bowling_Hall.src.Models
 {
-    public class MatchResults
+    public class MatchLogic
     {
+
     }
 }
