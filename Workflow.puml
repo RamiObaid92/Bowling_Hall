@@ -1,0 +1,16 @@
+@startuml
+start
+scale 1.5
+:Starta match;
+:Mata in Spelare 1 och Spelare 2;
+:Match påbörjas;
+
+:Simulera kast i 10 rutor;
+while (Fler kast att simulera?) is (Ja)
+  :Uppdatera poäng;
+endwhile (Nej)
+
+:Beräkna slutpoäng;
+:Utse vinnare;
+stop
+@enduml

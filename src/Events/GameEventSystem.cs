@@ -2,6 +2,7 @@
 
 namespace Bowling_Hall.src.Events
 {
+    // Observer Klass
     public class GameEventSystem
     {
         private readonly List<IGameEventListener> _listeners = new();

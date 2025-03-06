@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bowling_Hall.src.Services
 {
+    // Observer Klass
     public class ScoreLogger : IGameEventListener
     {
         private readonly ILogger<ScoreLogger> _logger;

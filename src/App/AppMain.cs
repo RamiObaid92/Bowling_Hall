@@ -10,6 +10,7 @@ namespace Bowling_Hall.src.App
     {
         private readonly IMemberService _memberService;
         private readonly ILogger<AppMain> _logger;
+        // Instansierar Observer pattern
         private readonly GameEventSystem _gameEventSystem;
         private readonly ScoreLogger _scoreLogger;
 
@@ -27,8 +28,6 @@ namespace Bowling_Hall.src.App
 
             while (true)
             {
-                _logger.LogInformation("Loopar huvudmenyn");
-
                 Console.WriteLine("\nVälkommen till Bowling hallen! Välj ett alternativ");
                 Console.WriteLine("\n1. Registrera dig");
                 Console.WriteLine("2. Starta en match");
@@ -40,6 +39,7 @@ namespace Bowling_Hall.src.App
                 {
                     case "1":
                         RegisterMember();
+                        _logger.LogInformation("Loopar tillbaka till huvudmenyn");
                         break;
                     case "2":
                         StartMatch();
@@ -65,6 +65,8 @@ namespace Bowling_Hall.src.App
             Console.Write("Ange efternamn: ");
             string lastName = Console.ReadLine();
 
+            _logger.LogInformation($"input: {firstName} {lastName}");
+
             var newMember = new Member
             {
                 FirstName = firstName,
@@ -74,10 +76,12 @@ namespace Bowling_Hall.src.App
             try
             {
                 _memberService.AddMember(newMember);
+                _logger.LogInformation("Registrerar medlem");
             }
             catch (ArgumentException ex)
             {
                 _logger.LogError(ex.Message);
+                return;
             }
         }
 
@@ -90,12 +94,17 @@ namespace Bowling_Hall.src.App
 
             Console.Write("\nSpelare 1: ");
             string playerOne = Console.ReadLine();
-            _logger.LogInformation($"input: {playerOne}");
+            _logger.LogInformation($"Input spelare 1: {playerOne}");
 
             Console.Write("Spelare 2: ");
             string playerTwo = Console.ReadLine();
-            _logger.LogInformation($"input: {playerTwo}");
+            _logger.LogInformation($"Input spelare 2: {playerTwo}");
 
+            Console.WriteLine($"{playerOne} vs {playerTwo}, tryck på enter när du är redo!");
+
+            Console.ReadKey();
+
+            // Lägger till ScoreLogger som lyssnare
             _gameEventSystem.AddListener(_scoreLogger);
 
             var match = new MatchLogic(_gameEventSystem, playerOne, playerTwo);

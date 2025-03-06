@@ -1,0 +1,134 @@
+@startuml
+
+' ==============================
+' INTERFACES
+' ==============================
+interface IGameEventListener {
+  + onGameStarted()
+  + onGameEnded(winner, score)
+  + onScoreUpdated(player, score)
+}
+
+interface IMemberService {
+  + AddMember(member: Member)
+  + GetMemberById(id: int): Member
+  + GetAllMembers(): IEnumerable<Member>
+  + UpdateMember(member: Member)
+  + DeleteMember(id: int)
+}
+
+
+interface IRepositoryMember {
+  + GetAll(): IEnumerable<Member>
+  + GetById(id: int): Member
+  + Add(entity: Member)
+  + Update(entity: Member)
+  + Delete(entity: Member)
+}
+
+' ==============================
+' KLASSER
+' ==============================
+
+class Program {
+  + Main()
+}
+
+class AppMain {
+  - _memberService : IMemberService
+  - _logger : ILogger<AppMain>
+  - _gameEventSystem : GameEventSystem
+  - _scoreLogger : ScoreLogger
+
+  + Run()
+  - RegisterMember()
+  - StartMatch()
+}
+
+class GameEventSystem {
+  - _listeners : List<IGameEventListener>
+
+  + AddListener(listener: IGameEventListener)
+  + RemoveListener(listener: IGameEventListener)
+  + TriggerGameStarted()
+  + TriggerGameEnded(winner, score)
+  + TriggerScoreUpdated(player, score)
+}
+
+class ScoreLogger {
+  - _logger : ILogger<ScoreLogger>
+
+  + onGameStarted()
+  + onGameEnded(winner, score)
+  + onScoreUpdated(player, score)
+}
+
+class MatchLogic {
+  - _eventSystem : GameEventSystem
+  - _playerOne : string
+  - _playerTwo : string
+  - _scores : Dictionary<string, List<int>>
+
+  + PlayMatch()
+  - SimulatePlayer(player: string)
+  - CalcScore(rolls: List<int>): int
+}
+
+class MemberService {
+  - _memberRepo : IRepositoryMember
+  - _logger : ILogger<MemberService>
+
+  + AddMember(member: Member)
+  + GetMemberById(id: int): Member
+  + GetAllMembers(): IEnumerable<Member>
+  + UpdateMember(member: Member)
+  + DeleteMember(id: int)
+}
+
+class MemberRepo {
+  - _context : AppDbContext
+
+  + GetAll(): IEnumerable<Member>
+  + GetById(id: int): Member
+  + Add(member: Member)
+  + Update(member: Member)
+  + Delete(member: Member)
+}
+
+class Member {
+  + Id : int
+  + FirstName : string
+  + LastName : string
+}
+
+class AppDbContext {
+  + Members : DbSet<Member>
+}
+
+' ==============================
+' RELATIONER
+' ==============================
+
+Program --> AppMain : "Instansierar"
+
+
+AppMain --> IMemberService : "Dependency"
+AppMain --> GameEventSystem : "Dependency"
+AppMain --> ScoreLogger : "Dependency"
+AppMain --> MatchLogic : "Instansierar"
+
+MatchLogic --> GameEventSystem : "Dependency"
+
+GameEventSystem --> IGameEventListener : "notifierar"
+
+ScoreLogger --|> IGameEventListener : "Inheritance"
+
+MemberService --|> IMemberService : "Inheritance"
+MemberService --> IRepositoryMember : "Dependency"
+
+MemberRepo --|> IRepositoryMember : "Inheritance"
+MemberRepo --> AppDbContext : "Dependency"
+
+AppDbContext --> Member : "DbSet"
+
+@enduml

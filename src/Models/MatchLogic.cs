@@ -1,4 +1,5 @@
 ﻿using Bowling_Hall.src.Events;
+using Microsoft.Extensions.Logging;
 
 namespace Bowling_Hall.src.Models
 {
@@ -12,6 +13,7 @@ namespace Bowling_Hall.src.Models
 
         private readonly Dictionary<string, List<int>> _scores = new();
 
+
         public MatchLogic(GameEventSystem eventSystem, string playerOne, string playerTwo)
         {
             _eventSystem = eventSystem;
@@ -21,6 +23,7 @@ namespace Bowling_Hall.src.Models
 
         public void PlayMatch()
         {
+            // Observerar spelets start
             _eventSystem.TriggerGameStarted();
 
             _scores[_playerOne] = new List<int>();
@@ -34,6 +37,7 @@ namespace Bowling_Hall.src.Models
             string winner = playerOneScore > playerTwoScore ? _playerOne : _playerTwo;
             int winnerScore = Math.Max(playerOneScore, playerTwoScore);
 
+            // Observerar spelets avslut
             _eventSystem.TriggerGameEnded(winner, winnerScore);
         }
 
@@ -105,7 +109,6 @@ namespace Bowling_Hall.src.Models
                 int lastFrameRoll2 = rolls[rollIndex + 1];
                 score += lastFrameRoll1 + lastFrameRoll2;
             }
-
             return score;
         }
     }

@@ -17,13 +17,20 @@ namespace Bowling_Hall.src.Services
 
         public void AddMember(Member member)
         {
-            if (string.IsNullOrWhiteSpace(member.FirstName) || string.IsNullOrWhiteSpace(member.LastName))
+            if (string.IsNullOrWhiteSpace(member.FirstName) && string.IsNullOrWhiteSpace(member.LastName))
             {
                 _logger.LogWarning("Användaren matade in en tom sträng");
                 throw new ArgumentException("Förnamn eller Efternamn får inte vara tomt");
             }
-            _memberRepo.Add(member);
-            _logger.LogInformation($"Medlem {member.FirstName} {member.LastName} tillagd i databas");
+            _logger.LogInformation($"Bearbetar {member.FirstName} {member.LastName}");
+            try
+            {
+                _memberRepo.Add(member);
+            }
+            catch (ArgumentException ex)
+            {
+                throw;
+            }
         }
 
         public Member GetMemberById(int id)

@@ -43,6 +43,8 @@ namespace Bowling_Hall.src
                     services.AddScoped<GameEventSystem>();
                     services.AddScoped<ScoreLogger>();
 
+                    services.AddScoped<MatchLogic>();
+
                     // Singleton används även här för att skapa en instans av AppMain som kör resten av applikationen
                     services.AddSingleton<AppMain>();
                 }).Build();
