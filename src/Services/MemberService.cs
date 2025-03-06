@@ -27,7 +27,7 @@ namespace Bowling_Hall.src.Services
             {
                 _memberRepo.Add(member);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 throw;
             }
