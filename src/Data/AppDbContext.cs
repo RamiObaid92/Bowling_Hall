@@ -1,6 +1,5 @@
 ﻿using Bowling_Hall.src.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Bowling_Hall.src.Data
 {

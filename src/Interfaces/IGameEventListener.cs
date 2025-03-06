@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bowling_Hall.src.Interfaces
+﻿namespace Bowling_Hall.src.Interfaces
 {
     public interface IGameEventListener
     {
+        void onGameStarted();
+        void onGameEnded(string winner);
+        void onScoreUpdated(string player, int score);
+
     }
 }

@@ -15,6 +15,7 @@ namespace Bowling_Hall.src
     {
         static void Main(string[] args)
         {
+            // Builder pattern används för att konfigurera och bygga en IHost med olika tjänster.
             var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(logging =>
                 {
@@ -26,29 +27,34 @@ namespace Bowling_Hall.src
                 {
                     var config = context.Configuration;
 
+                    // Singleton pattern för en enda instans av logger som används i hela applikationen
                     services.AddSingleton<ILoggerFactory, LoggerFactory>();
                     services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
 
                     services.AddDbContext<AppDbContext>(options => options.UseSqlite(config.GetSection("Database:ConnectionString").Value));
 
+                    // Scoped används för att skapa en ny instans av MemberRepo och MemberService för varje request genom dependency injection
                     services.AddScoped<IRepository<Member>, MemberRepo>();
                     services.AddScoped<IMemberService, MemberService>();
 
+                    // Singleton används även här för att skapa en instans av AppMain som kör resten av applikationen
                     services.AddSingleton<AppMain>();
                 }).Build();
 
             using (var scope = builder.Services.CreateScope()) 
             {
-                // Logger brought into scope
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                // get the current directory
-                var currentDirectory = Directory.GetCurrentDirectory();
-
-                // Log the directory
-                logger.LogInformation("Current working directory: {Directory}", currentDirectory);
                 var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                dbContext.Database.EnsureCreated();
+
+                try
+                {
+                    dbContext.Database.EnsureCreated();
+                    logger.LogInformation("Anslutning till databas lyckad");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Anslutning till databas misslyckades");
+                }
             }
 
             var app = builder.Services.GetRequiredService<AppMain>();

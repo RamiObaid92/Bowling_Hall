@@ -1,7 +1,5 @@
 ﻿using Bowling_Hall.src.Interfaces;
-using Bowling_Hall.src.Models;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Bowling_Hall.src.App
 {
@@ -19,6 +17,7 @@ namespace Bowling_Hall.src.App
         public void Run()
         {
             _logger.LogInformation("App is running");
+            Console.ReadKey();
         }
     }
 }
