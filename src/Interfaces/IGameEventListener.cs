@@ -4,7 +4,7 @@
     public interface IGameEventListener
     {
         void onGameStarted();
-        void onGameEnded(string winner);
+        void onGameEnded(string winner, int score);
         void onScoreUpdated(string player, int score);
     }
 }

@@ -17,9 +17,9 @@ namespace Bowling_Hall.src.Services
             _logger.LogInformation($"Spel startades");
         }
 
-        public void onGameEnded(string winner)
+        public void onGameEnded(string winner, int score)
         {
-            _logger.LogInformation($"Spelet avslutat, vinnare är {winner}");
+            _logger.LogInformation($"Spelet avslutat, vinnare är {winner} med {score} poäng");
         }
 
         public void onScoreUpdated(string player, int score)

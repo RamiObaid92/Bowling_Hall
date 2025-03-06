@@ -30,11 +30,11 @@ namespace Bowling_Hall.src.Events
             }
         }
 
-        public void TriggerGameEnded(string winner)
+        public void TriggerGameEnded(string winner, int score)
         {
             foreach (var listener in _listeners)
             {
-                listener.onGameEnded(winner);
+                listener.onGameEnded(winner, score);
             }
         }
 

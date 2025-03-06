@@ -40,11 +40,9 @@ namespace Bowling_Hall.src.App
                 {
                     case "1":
                         RegisterMember();
-                        _logger.LogInformation("Registrering valdes");
                         break;
                     case "2":
                         StartMatch();
-                        _logger.LogInformation("Starta en match valdes");
                         break;
                     case "3":
                         _logger.LogInformation("Appen avslutades");
@@ -59,6 +57,7 @@ namespace Bowling_Hall.src.App
         private void RegisterMember()
         {
             Console.Clear();
+            _logger.LogInformation("Registrering valdes");
 
             Console.Write("Ange förnamn: ");
             string firstName = Console.ReadLine();
@@ -84,6 +83,9 @@ namespace Bowling_Hall.src.App
 
         private void StartMatch()
         {
+            Console.Clear();
+            _logger.LogInformation("Starta en match valdes");
+
             Console.WriteLine("\nDu valde att starta en match! Ange två spelare.");
 
             Console.Write("\nSpelare 1: ");
