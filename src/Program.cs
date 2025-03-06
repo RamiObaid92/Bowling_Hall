@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Bowling_Hall.src.Events;
 
 namespace Bowling_Hall.src
 {
@@ -31,11 +32,16 @@ namespace Bowling_Hall.src
                     services.AddSingleton<ILoggerFactory, LoggerFactory>();
                     services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
 
+                    // DbContext används för att få infomationen för typen av databas som används och anslutningssträngen från appsettings.json
                     services.AddDbContext<AppDbContext>(options => options.UseSqlite(config.GetSection("Database:ConnectionString").Value));
 
-                    // Scoped används för att skapa en ny instans av MemberRepo och MemberService för varje request genom dependency injection
+                    // Ny instans skapas för varje scope som används i applikationen
                     services.AddScoped<IRepository<Member>, MemberRepo>();
                     services.AddScoped<IMemberService, MemberService>();
+
+                    // Ny instans skapas för varje match som spelas
+                    services.AddScoped<GameEventSystem>();
+                    services.AddScoped<ScoreLogger>();
 
                     // Singleton används även här för att skapa en instans av AppMain som kör resten av applikationen
                     services.AddSingleton<AppMain>();
