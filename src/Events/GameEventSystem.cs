@@ -22,7 +22,7 @@ namespace Bowling_Hall.src.Events
             }
         }
 
-        public void triggerGameStarted()
+        public void TriggerGameStarted()
         {
             foreach (var listener in _listeners)
             {
@@ -30,7 +30,7 @@ namespace Bowling_Hall.src.Events
             }
         }
 
-        public void triggerGameEnded(string winner)
+        public void TriggerGameEnded(string winner)
         {
             foreach (var listener in _listeners)
             {
@@ -38,7 +38,7 @@ namespace Bowling_Hall.src.Events
             }
         }
 
-        public void triggerScoreUpdated(string player, int score)
+        public void TriggerScoreUpdated(string player, int score)
         {
             foreach (var listener in _listeners)
             {

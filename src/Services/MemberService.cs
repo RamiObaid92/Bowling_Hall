@@ -19,7 +19,7 @@ namespace Bowling_Hall.src.Services
         {
             if (string.IsNullOrWhiteSpace(member.FirstName) || string.IsNullOrWhiteSpace(member.LastName))
             {
-                _logger.LogWarning("Förnamn eller Efternamn var tomt");
+                _logger.LogWarning("Användaren matade in en tom sträng");
                 throw new ArgumentException("Förnamn eller Efternamn får inte vara tomt");
             }
             _memberRepo.Add(member);
