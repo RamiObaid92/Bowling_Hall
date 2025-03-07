@@ -1,5 +1,4 @@
 @startuml
-
 ' ==============================
 ' INTERFACES
 ' ==============================
@@ -121,12 +120,12 @@ MatchLogic --> GameEventSystem : "Dependency"
 
 GameEventSystem --> IGameEventListener : "notifierar"
 
-ScoreLogger --|> IGameEventListener : "Inheritance"
+ScoreLogger --|> IGameEventListener : "Ärver"
 
-MemberService --|> IMemberService : "Inheritance"
+MemberService --|> IMemberService : "Ärver"
 MemberService --> IRepositoryMember : "Dependency"
 
-MemberRepo --|> IRepositoryMember : "Inheritance"
+MemberRepo --|> IRepositoryMember : "Ärver"
 MemberRepo --> AppDbContext : "Dependency"
 
 AppDbContext --> Member : "DbSet"

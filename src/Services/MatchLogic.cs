@@ -1,10 +1,10 @@
 ﻿using Bowling_Hall.src.Events;
-using Microsoft.Extensions.Logging;
 
-namespace Bowling_Hall.src.Models
+namespace Bowling_Hall.src.Services
 {
     public class MatchLogic
     {
+        // Instansierar Observer klassen
         private readonly GameEventSystem _eventSystem;
         private readonly string _playerOne;
         private readonly string _playerTwo;
@@ -44,14 +44,16 @@ namespace Bowling_Hall.src.Models
         private void SimulatePlayer(string player)
         {
             _scores[player] = new List<int>();
-
+            // Simulerar 10 kast för varje spelare
             for (int i = 0; i < 10; i++)
             {
                 int firstRoll = _random.Next(0, 11);
-                int secondRoll = (firstRoll == 10) ? 0 : _random.Next(0, 11 - firstRoll);
+                int secondRoll = firstRoll == 10 ? 0 : _random.Next(0, 11 - firstRoll);
 
                 _scores[player].Add(firstRoll);
                 _scores[player].Add(secondRoll);
+
+                Thread.Sleep(300);
 
                 int currentScore = CalcScore(_scores[player]);
                 _eventSystem.TriggerScoreUpdated(player, currentScore);
@@ -60,6 +62,8 @@ namespace Bowling_Hall.src.Models
 
         private int CalcScore(List<int> rolls)
         {
+
+            // Räknar ut poängen för varje spelare
             int score = 0;
             int rollIndex = 0;
 
@@ -102,7 +106,7 @@ namespace Bowling_Hall.src.Models
                     rollIndex += 2;
                 }
             }
-
+            // Räknar ut poängen för sista kastet
             if (rollIndex + 1 < rolls.Count)
             {
                 int lastFrameRoll1 = rolls[rollIndex];

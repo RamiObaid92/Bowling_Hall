@@ -10,7 +10,6 @@ namespace Bowling_Hall.src.App
     {
         private readonly IMemberService _memberService;
         private readonly ILogger<AppMain> _logger;
-        // Instansierar Observer pattern
         private readonly GameEventSystem _gameEventSystem;
         private readonly ScoreLogger _scoreLogger;
 
@@ -28,6 +27,7 @@ namespace Bowling_Hall.src.App
 
             while (true)
             {
+                System.Threading.Thread.Sleep(300);
                 Console.WriteLine("\nVälkommen till Bowling hallen! Välj ett alternativ");
                 Console.WriteLine("\n1. Registrera dig");
                 Console.WriteLine("2. Starta en match");
@@ -57,6 +57,7 @@ namespace Bowling_Hall.src.App
         private void RegisterMember()
         {
             Console.Clear();
+            System.Threading.Thread.Sleep(300);
             _logger.LogInformation("Registrering valdes");
 
             Console.Write("Ange förnamn: ");
@@ -88,6 +89,7 @@ namespace Bowling_Hall.src.App
         private void StartMatch()
         {
             Console.Clear();
+            System.Threading.Thread.Sleep(300);
             _logger.LogInformation("Starta en match valdes");
 
             Console.WriteLine("\nDu valde att starta en match! Ange två spelare.");
